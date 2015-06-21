@@ -121,8 +121,18 @@ var pfac = function() {
 				//append to solution set
 				solution[i] = p.initial
 			};
-		}
+
+			return series
 	}
+	this.deck = function() { 
+		deck = []
+		for (var i = 0; i < 20; i++) {
+			x = new pfac 
+			deck.push(x.linear())
+		};
+		return deck 
+	}
+}
 
 genP = new pfac;
 keys = Object.keys(genP)
