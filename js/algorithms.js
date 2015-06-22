@@ -24,7 +24,7 @@ var pfac = function() {
 		var count = 0
 		var disc = []
 		for (var i = 0; i < operators.length; i++) {
-			for (var j = 0; j < 10; j++) {
+			for (var j = 1; j < 10; j++) {
 				//the operation string
 				s = n1+this.operators[i]+j+'=='+n2;
 				if (eval(s) == true) {
@@ -35,36 +35,40 @@ var pfac = function() {
 		};
 		return disc
 	}
-	this.linear = function() {
+	this.card = function(type) {
 			//so that it creates a new card every time
 			p = new pfac
 			this.nbounds = 10
 			keys = ['add', 'subtract', 'multiply', 'divide']
-			//main series array
-			series = []
+			//main card array
+			card = []
 
-			//solutions
-			series[1] = []
-			solution = series[1]
+			//create solutions section
+			card[1] = {}
+			card[2] = {} 
+			clean_guide = card[1]
+			solution = card[2]
 
+
+
+			//initial random element for guide
 			init_rand = Math.floor(Math.random() * this.nbounds)
 
-			//Dumps Main
-			var series_operators = [] 
+			//while loop testing condition
 			var test_condition = 0
 
 			//THE GUIDE
-			//we need to make sure that the guide has 0 black holes. So we create a while loop, that only returns a series with 0 black holes.
+			//we need to make sure that the guide has 0 black holes. So we create a while loop, that only returns a card with 0 black holes.
 			while(test_condition == 0) {
 				//main variable
-				series[0] = []
-				var guide = series[0]
+				card[0] = []
+				var guide = card[0]
 
 				//black holes
 				var black_holes = 0
 
-				//Create a random four element series 
-				//setup a random first number and push it to the main series
+				//Create a random four element card 
+				//setup a random first number and push it to the main card
 				p.initial = init_rand
 				guide[0] = [p.initial]
 				guide[0].push("undefined")
@@ -90,12 +94,13 @@ var pfac = function() {
 				}
 	
 				//if you find a black hole, report it.
-				if(black_holes > 0) {
+				if(black_holes !== type) {
 					//reset the guide. start over.
 					guide = []
 				} else {
 					//exit the loop
-					console.log(guide)
+					// console.log(guide)
+					// console.log(black_holes)
 					test_condition = 1
 				}
 			}
@@ -110,25 +115,30 @@ var pfac = function() {
 			//SOLUTION SPACE
 			for (var i = 1; i < 4; i++) {
 				//find the specific operation
-				guide = series[0]
-				key = series[0][i][1][0]
-				amount = series[0][i][1][1]
+				guide = card[0]
+				key = card[0][i][1][0]
+				amount = card[0][i][1][1]
 				op = [key, amount]
 
 				//perform the operation
 				p[key](amount)
 
 				//append to solution set
-				solution[i] = p.initial
+				solution[i.toString()] = p.initial
 			};
 
-			return series
+			for (var i = 0; i < card[0].length; i++) {
+				x = i.toString()
+				clean_guide[x] = card[0][i][0]
+			};
+
+			return card
 	}
 	this.deck = function() { 
 		deck = []
-		for (var i = 0; i < 20; i++) {
-			x = new pfac 
-			deck.push(x.linear())
+		for (var i = 0; i < 3; i++) {
+			w = new pfac 
+			deck.push(w.card(0))
 		};
 		return deck 
 	}
@@ -138,99 +148,31 @@ genP = new pfac;
 keys = Object.keys(genP)
 keys.shift()
 
-var cardTypes = ['linear','single','multiple']
+var player = function(pot) {
+	this.user_name = "Not Set."
+	this.email = null
+	this.deck = (new pfac).deck();
+	this.newDeck = function() { return this.deck = (new pfac).deck() }
+	this.score = 0
+	this.current_choice = null
+	this.pot = pot
+	this.returnName = function() { return this.user_name }
+}	
 
-//here's the issue. I need things of varying difficulty. let's start with the hardest first.
-// var pat = function() {
-// 	var output = []
-// 	var _pattern_d1 = function pattern() {
-// 		p = new pfac
-// 		keys = Object.keys(p)
-// 		keys.shift()
-// 		keys.pop()
-// 		nsteps = keys.length - 1
-// 		nlength = 4
-// 		nrounds = 2
-// 		nbounds = 10
-// 		this.main = []
+//this sets up a new game with everything we would want in it
+var newGame = function() { 
+	this.pot = 1000
+	this.players = [new player(this.pot/2), new player(this.pot/2), this.pot]
+	this.turn = null
+	this.randStart = function() { return this.turn = rand(0, 1) }
+	this.newDeck = function() {
+		//reset each deck
+		this.players[0].deck = (new pfac).deck();
+		this.players[1].deck = (new pfac).deck();
+	}
+} 
 
-
-// 		// the pattern factory has to be able to produce three different patterns types. linear, single, and multiple.
-// 		// each pattern is produced with one function. 
-// 		// the deck has three cards
-// 		// so we run three the creation loop three times.
-
-// 		// function filter() {
-// 		// 	pfac = new pfac 
-// 		// 	loop = 10
-// 		// 	alpha = 
-// 		// 	for (var i = 0; i < loop; i++) {
-// 		// 		for (var j = 0; j < loop; j++) {
-					
-// 		// 		};
-// 		// 	};
-// 		// }
-
-// 		// //here we setup the rules of the pattern
-// 		// var pattern = []
-// 		// for (var j = 0; j < nlength; j++) {
-// 		// 	randk = rand(0, nsteps)
-// 		// 	randa = rand(1, nbounds)
-// 		// 	// console.log(randk)
-// 		// 	console.log(randk, randa)
-// 		// 	pattern.push([keys[randk], randa])
-// 		// };
-// 		// output.push(pattern)
-
-// 		// //here we execute the damn thing
-// 		for (var i = 0; i < nrounds; i++) {
-// 			for(var k = 0; k < output[0].length; k++) {
-// 				//key
-// 				_k = output[0][k][0]
-// 				//amount
-// 				_a = output[0][k][1]
-// 				// debugger	
-// 				this.main.push(p[_k](_a))
-// 			}
-// 		};
-// 		return this.main
-
-
-// 	};
-// 	return new _pattern_d1
-// }
-
-// add(rand) ; add(rand2) ; subtract(rand3) ; multiply(rand4) 
-
-// var player = function() {
-// 	this.user_name = null
-// 	this.email = null
-// 	this.deck = [new pat, new pat, new pat];
-// 	this.score = 0
-// 	this.current_choice = null
-// 	this.returnDeck = function() { return this.deck } 
-// 	this.returnName = function() { return this.user_name }
-// }	
-
-// //this sets up a new game with everything we would want in it
-// var newGame = function() { 
-// 	this.players = [new player, new player]
-// 	this.turn = null
-// 	this.randStart = function() { return this.turn = rand(0, 1) }
-// 	this.newDeck = function() {
-// 		//cycle through players 
-// 		this.players[0].patterns = [new pat, new pat, new pat]
-// 		this.players[1].patterns = [new pat, new pat, new pat]
-// 	}
-// } 
-
-// var game = new newGame
-
-// -----------------------------------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------------------------------
-// The game itself
-
+var game = new newGame
 
 
 

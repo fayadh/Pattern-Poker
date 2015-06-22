@@ -9,7 +9,6 @@ Players: 2
 
 1) At the start of each round, each player receives a total of three cards.
 
-
 * There are three card types: 
 * linear, single, multiverse.
 
@@ -25,14 +24,21 @@ Anatomy of a card:
 | 			-		 	 |
 |              |
 | 		 	5			 |
-| 			7			 |
-| 			10		 |
-| 			__		 |
+| 		 { }		 |
+| 		 { }		 |
+| 		 { }		 |
 |              |
 	------------
 
+Each card consists of two sections with PATTERNS. 
+
 The top section is called the guide. It identifies the pattern that we are going to be using to guess the solution.
 The bottom section is the solution space. It's where the user has to attempt to guess the correct pattern.
+
+You have the following tools at your disposal: 
+Operations: [ + , - , % , * ] 	&		Amount: A number between 1 & 10 (inclusive). 
+MAIN QUESTION: In how many ways, using ONE operation and one Amount, can you get from one number to the next? 
+MAIN GOAL: identify the EXACT series of operations that the computer took for the card.
 
 The game is played by using the guides as a way of correctly identifying each of operations performed on each step.
 
@@ -47,6 +53,7 @@ Types of cards:
 * there's special hacks that people can apply 
 - Joker: solves the puzzle. 
 
-
 Round: 
+
+- with each round, the deck is refreshed.
 
