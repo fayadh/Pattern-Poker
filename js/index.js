@@ -34,7 +34,6 @@ var Info = React.createClass({
     this.state.players[0].pot = prompt('New Pot: ')
   },
   render: function() {
-
     return (
       <div>
         <img src="Images/Pattern_Poker.png" height="100px" />
@@ -70,37 +69,117 @@ var Info = React.createClass({
   }
 });
 
-//game clock
-setInterval(function() {
-  React.render(
-    <Info date={new Date()} props={game} />,
-    document.body
-  );
-}, 500);
+// //game clock
+// setInterval(function() {
+//   React.render(
+//     <Info date={new Date()} props={game} />,
+//     document.body
+//   );
+// }, 500);
 
+estyle = { 
+  padding: "1em"
+}
+// create a card class. Loop over the card class, 
+  
+// var Guide = React.createClass({
+//   render: function() {
+//     return (
 
+//     )
+//   }
+// })
 
-var Player1 = React.createClass({
+// var Solution = React.createClass({
+//   render: function() {
+//     return (
+
+//     )
+//   }
+// })
+
+// var Card = React.creatClass({
+//   render: function() {
+//     return (
+//       <div>
+//         <Guide />
+//         <Solution />
+//       </div>
+//     )
+//   }
+// })
+
+var Guide = React.createClass({
   getInitialState: function() {
     return {players: game.players}
   }, 
   render: function() {
+    var guide = [];
+    var messages = {}
+    console.log(x = this.props)
+    guide_in_array = this.props.props.props.deck;
+    for (var i = 0; i < guide_in_array.length; i++) {
+      s = guide_in_array[i][1].toString() + ""
+      guide.push(<div className={'m'} style={estyle}> {s} </div>)
+    }
     return (
       <div> 
-        {this.state.players[0].deck.map(function(e) { 
-          return (
-            <span> e </span>
-          )
-        })}
+        {guide}
       </div>
     )
   },
 })
 
-React.render(
-  <Player1 />,
-  document.body
-)
+var Solution = React.createClass({
+  getInitialState: function() {
+    return {players: game.players}
+  }, 
+  render: function() {
+    var guide = [];
+    var messages = {}
+    console.log(x = this.props)
+    guide_in_array = this.props.props.props.deck;
+    for (var i = 0; i < guide_in_array.length; i++) {
+      s = guide_in_array[i][2].toString() + ""
+      guide.push(<div className={'m'} style={estyle}> {s} </div>)
+    }
+    return (
+      <div> 
+        {guide}
+      </div>
+    )
+  },
+})
+
+var Card = React.createClass({
+  render: function() {
+    return (
+      <div>
+        <Guide props={this.props} /> 
+        <Solution props={this.props} /> 
+      </div>
+    )
+  }
+})
+
+  React.render(
+    <Card props={game.players[0]} />,
+    document.getElementById('player1')
+  );
+
+  React.render(
+    <Card props={game.players[1]} />,
+    document.getElementById('player2')
+  );
+
+
+
+// <Card /> 
+
+// <Card>
+//   <Guide />
+//   <Solution />
+// <Card>
 
 
 

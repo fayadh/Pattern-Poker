@@ -44,12 +44,10 @@ var pfac = function() {
 			card = []
 
 			//create solutions section
-			card[1] = {}
-			card[2] = {} 
+			card[1] = []
+			card[2] = [] 
 			clean_guide = card[1]
 			solution = card[2]
-
-
 
 			//initial random element for guide
 			init_rand = Math.floor(Math.random() * this.nbounds)
@@ -124,12 +122,11 @@ var pfac = function() {
 				p[key](amount)
 
 				//append to solution set
-				solution[i.toString()] = p.initial
+				solution[i] = p.initial
 			};
 
 			for (var i = 0; i < card[0].length; i++) {
-				x = i.toString()
-				clean_guide[x] = card[0][i][0]
+				clean_guide.push(card[0][i][0])
 			};
 
 			return card
